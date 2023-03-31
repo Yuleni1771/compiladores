@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+  <head>
+    <Meta charset="utf-8">
+    <title>Práctica 1 Compiladores</title>
+    <script src=".js"></script>
+    <link rel="stylesheet" href="PresentacionCapitulo.css">
+  </head>
+<body>
+<header>Compiladores<br>Práctica 1</header>
+ <nav>
+    
+     <p><img src="temario-icono.png" width=95% border=5></image></p>
+     
+     <p class="derecha"><a href="TemarioCompiladores.html">Temario<img src="iconoPoo.png" width=65% border=5></image></a></p>
+     
+     <p><a href="MaterialPoo.html"><img src="iconoPoo.png" width=90% border=5></image></a></p>
+         
+ </nav>
+
+  <section class="envoltura">
+    <h1 class="titulo">DISEÑO E IMPLEMENTACIÓN DE LAS CLASES AFN, AFD</h1>
+
+    <section class="interna">
+      
+      <article>
+       
+       <h1>Objetivo</h1>
+       <hr>
+       <p>Se crearan las clases, para el AFN y para el AFD.</p>
+      <hr>
+      <br>
+      <h1>Actividades</h1>
+      <hr>
+      <br>
+      <!--
+       <p>Compilar y ejecutar los siguientes programas:</p>
+       <br>
+       <p><strong>Programa AFN:</strong></p>
+       <br>
+       <pre>
+       public class AFN {
+
+       }
+         
+       public class Thompson() {
+           
+         }
+
+       public class Subconjuntos() {
+           
+         }
+
+       public class Minimizacion() {
+           
+         }
+        
+       public class DriverAFN {
+         public static void main(String[] args) {
+           AFN er = new AFN();
+           
+         }
+       }
+       </pre>
+       <br>-->
+       <p>Se tiene la expresión regular <strong>c* b (c | bc* b)*</strong>. Usar el siguiente código para programar los tokens que acepta el AFD.</p>
+       <p><strong>Programa AFD.</strong> Para ejecutar este programa se hace con la linea de comando:<strong> java DriverAFD cadena de entrada</strong></p>
+       <br>
+       <pre>
+       import java.util.*;
+
+       public class DriverAFD {
+         public static void main(String[] args) {
+           ArgumentosToken tm = new ArgumentosToken(args);
+           AFD m = new AFD(tm);
+           m.activarAFD();
+         }
+       }
+
+       class ArgumentosToken {
+         private int indice;
+         String entrada;
+         public ArgumentosToken(String[] args) {
+           if(args.length > 0)
+             entrada = args[0];
+           else
+             entrada = "";
+           indice = 0;
+           System.out.println("entrada = " + entrada);
+         }
+         public char getSiguienteToken() {
+           if(indice < entrada.length())
+             return entrada.charAt(indice++);
+           else
+             return '$';
+         }
+       } 
+
+       class AFD {
+         ArgumentosToken tm;
+         private char tokenActual;
+         public AFD(ArgumentosToken tm) {
+           this.tm = tm;
+         }
+         public void avanzar() {
+           tokenActual = tm.getSiguienteToken();
+         }
+         public void activarAFD() {
+           int estadoActual = 0;
+           avanzar();
+    
+           while(tokenActual != '$') {
+             switch(estadoActual) {
+               case 0:
+                 if(tokenActual == 'b') estadoActual = 1;
+                 else if(tokenActual == 'c') estadoActual = 1;
+                 break;
+               case 1:
+                 if(tokenActual == 'b') estadoActual = 2;
+                 else if(tokenActual == 'c') estadoActual = 3;
+                 break;
+               case 2:
+                 if(tokenActual == 'b') estadoActual = 4;
+                 else if(tokenActual == 'c') estadoActual = 4;
+                 break;
+               case 3:
+                 if(tokenActual == 'b') estadoActual = 4;
+                 else if(tokenActual == 'c') estadoActual = 3;
+                 break;
+               case 4:
+                 if(tokenActual == 'b') estadoActual = 4;
+                 else if(tokenActual == 'c') estadoActual = 4;
+                 break;
+             }
+             avanzar();
+           }
+           if(estadoActual == 2 || estadoActual == 3)
+             System.out.println("Acep");
+           else
+             System.out.println("rechazado");
+         }
+       }
+       </pre>
+       <br>
+
+       <hr>
+      <h1>Cuestionario</h1>
+      <hr>
+      <br>
+      <p><strong>Pregunta 1.</strong> Realizar todo el proceso de transformación de la expresión regular hasta la tabla de transiciones del AFD. De tal manera que se compruebe el programa <strong>DriverAFD</strong>.</p>
+      <br>
+      <p><strong>Pregunta 2.</strong> Obtener el programa para reconocer las palabras clave <strong>if, else y return</strong>.</p>
+      <br>
+      </article>
+       <br>
+       <hr>
+       <br> 
+          
+    </section>
+
+       <aside>
+        <h1>Sugerencias</h1>
+        <hr>
+        <br>
+        <p><strong>Sugerencia 1. </strong> Para compilar el programa en la consola, usar el comando: <strong>javac ProgramaAFD.java</strong>. Para ejecutarlo, usar el comando: <strong>java ProgramaAFD</strong>.</p>
+        <br>
+        <p><strong>Sugerencia 2.</strong> El programa AFD, sirve para una ER específica.</p>
+        <br>
+       </aside>
+      <footer><p>Práctica 1</p><p class="derecha">Prof. José Sánchez Juárez</p></footer>
+   </section>
+</body>
+</html>
